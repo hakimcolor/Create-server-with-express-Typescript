@@ -142,7 +142,6 @@ app.get('/api/user', async (req: Request, res: Response) => {
       message: 'users retrived succesfully',
       data: result.rows,
     });
-    
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -151,6 +150,33 @@ app.get('/api/user', async (req: Request, res: Response) => {
     });
   }
 });
+
+// get data through using id ..
+
+app.get('/api/user/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const resulet = await pool.query(`SELECT * FROM "user" WHERE id=$1`, [id]);
+    if (resulet.rows.length === 0) {
+      res.status(500).json({ success : false,}
+       
+
+      )
+    }
+    res.status(200).json({
+      success: true,
+      message: 'user retived sucessfully id ..',
+      data: resulet.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
