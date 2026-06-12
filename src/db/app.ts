@@ -14,8 +14,6 @@ const port = config.port;
 app.use(express.json());
 app.use(express.text());
 
-initDB();
-
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Express server is running',
@@ -159,7 +157,5 @@ app.delete('/api/user/:id', async (req: Request, res: Response) => {
     });
   }
 });
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+
 export default app;

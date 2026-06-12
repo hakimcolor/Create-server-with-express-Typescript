@@ -5,8 +5,9 @@
 // } from 'express';
 // import { error } from 'node:console';
 
-import config from "./config"
-import app from "./db/app"
+import config from './config';
+import { initDB } from './db';
+import app from './db/app';
 
 // import { Pool } from 'pg';
 // const app: Application = express();
@@ -60,7 +61,9 @@ import app from "./db/app"
 // });
 
 const main = () => {
+  initDB();
   app.listen(config.port, () => {
     console.log(`Example app listening on port${config.port}`);
-  })
-}
+  });
+};
+main()
