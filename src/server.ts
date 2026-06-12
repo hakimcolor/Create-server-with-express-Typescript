@@ -105,7 +105,9 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-app.post('/post', async (req: Request, res: Response) => {
+
+
+app.post('/api/user', async (req: Request, res: Response) => {
   try {
     // console.log('Request Body:', req.body);
 
@@ -132,6 +134,7 @@ app.post('/post', async (req: Request, res: Response) => {
     });
   }
 });
+//get all data for neondb
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
