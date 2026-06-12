@@ -175,13 +175,13 @@ app.get('/api/user/:id', async (req: Request, res: Response) => {
 });
 
 //put method for update
-app.put('/api/user/:id', async (req, res) => {
+app.put('/api/user/:id', async (req:Request, res:Response) => {
   const { id } = req.params;
   const { name, password, age, is_active } = req.body;
   try {
     const result = await pool.query(
       `
-      UPDATE "user" SET name=$1,password=$2,age=$3,is_active=$4
+      UPDATE "user" SET name=COALESCE($1,name),password=COALESCE($,password),age=COALESCE($3,age),is_active=COALESCE($4,is_active)
       WHERE id=$5 RETURNING *
 
       `,
@@ -203,6 +203,7 @@ app.put('/api/user/:id', async (req, res) => {
     });
   }
 });
+//deleate using deleate
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
