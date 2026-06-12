@@ -105,8 +105,6 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-
-
 app.post('/api/user', async (req: Request, res: Response) => {
   try {
     // console.log('Request Body:', req.body);
@@ -135,7 +133,17 @@ app.post('/api/user', async (req: Request, res: Response) => {
   }
 });
 //get all data for neondb
-
+app.get('/api/user', async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(`
+        SELECT * FROM "user"`);
+    res.status(200).json({
+      success: true,
+      message: "users retrived succesfully",
+      data:result.rows,
+    })
+  } catch {}
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
