@@ -139,10 +139,17 @@ app.get('/api/user', async (req: Request, res: Response) => {
         SELECT * FROM "user"`);
     res.status(200).json({
       success: true,
-      message: "users retrived succesfully",
-      data:result.rows,
-    })
-  } catch {}
+      message: 'users retrived succesfully',
+      data: result.rows,
+    });
+    
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
 });
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
