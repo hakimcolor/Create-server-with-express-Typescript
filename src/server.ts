@@ -179,7 +179,8 @@ app.put('/api/user/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, password, age, is_active } = req.body;
   try {
-    const result = await pool.query(//if not update thias why using coalesce ($1, name)
+    const result = await pool.query(
+      //if not update thias why using coalesce ($1, name)
       `
   UPDATE "user"
   SET
@@ -209,7 +210,37 @@ app.put('/api/user/:id', async (req: Request, res: Response) => {
   }
 });
 //deleate using deleate
+app.delete('/api/user/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
 
+  try {
+    const result = await pool.query(
+      `
+      DELETE FROM "user"
+      WHERE id = $1
+      `,
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'User deleted successfully',
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      error,
+    });
+  }
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
