@@ -158,10 +158,7 @@ app.get('/api/user/:id', async (req: Request, res: Response) => {
   try {
     const resulet = await pool.query(`SELECT * FROM "user" WHERE id=$1`, [id]);
     if (resulet.rows.length === 0) {
-      res.status(500).json({ success : false,}
-       
-
-      )
+      res.status(500).json({ success: false });
     }
     res.status(200).json({
       success: true,
@@ -169,7 +166,37 @@ app.get('/api/user/:id', async (req: Request, res: Response) => {
       data: resulet.rows[0],
     });
   } catch (error: any) {
-    res.status(500).json({
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+});
+
+//put method for update
+app.put('/api/user/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, password, age, is_active } = req.body;
+  try {
+    const result = await pool.query(
+      `
+      UPDATE "user" SET name=$1,password=$2,age=$3,is_active=$4
+      WHERE id=$5 RETURNING *
+
+      `,
+      [name, password, age, is_active, id]
+    );
+    if (result.rows.length === 0) {
+      res.status(500).json({ success: false });
+    }
+    res.status(200).json({
+      success: true,
+      message: 'user retived sucessfully id ..',
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(404).json({
       success: false,
       message: error.message,
       error: error,
