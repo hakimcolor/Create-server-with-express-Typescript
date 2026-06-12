@@ -174,17 +174,22 @@ app.get('/api/user/:id', async (req: Request, res: Response) => {
   }
 });
 
-//put method for update
-app.put('/api/user/:id', async (req:Request, res:Response) => {
+//put method for updategit
+app.put('/api/user/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, password, age, is_active } = req.body;
   try {
-    const result = await pool.query(
+    const result = await pool.query(//if not update thias why using coalesce ($1, name)
       `
-      UPDATE "user" SET name=COALESCE($1,name),password=COALESCE($,password),age=COALESCE($3,age),is_active=COALESCE($4,is_active)
-      WHERE id=$5 RETURNING *
-
-      `,
+  UPDATE "user"
+  SET
+    name = COALESCE($1, name), 
+    password = COALESCE($2, password),
+    age = COALESCE($3, age),
+    is_active = COALESCE($4, is_active)
+  WHERE id = $5
+  RETURNING *;
+  `,
       [name, password, age, is_active, id]
     );
     if (result.rows.length === 0) {
