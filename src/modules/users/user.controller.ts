@@ -84,7 +84,7 @@ const deleatedatadb = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    
+    const result = await userService.deleatdata(id as string);
     if (result.rowCount === 0) {
       return res.status(404).json({
         success: false,

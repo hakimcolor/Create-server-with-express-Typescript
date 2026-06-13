@@ -8,5 +8,5 @@ router.post('/', userController.createuser);
 router.get('/', userController.getallData);
 router.get('/:id', userController.getOnedata);
 router.put('/:id', userController.updatedata);
-router.delete('/:id',);
+router.delete('/:id',userController.deleatedatadb);
 export const userRout = router;

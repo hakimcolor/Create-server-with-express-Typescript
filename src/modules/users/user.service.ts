@@ -22,7 +22,7 @@ const onedataget = async (id: string) => {
   const resulet = await pool.query(`SELECT * FROM "user" WHERE id=$1`, [id]);
   return resulet;
 };
-//update data 
+//update data
 const updateonejson = async (payload: Iuser, id: string) => {
   const { name, password, age, is_active } = payload;
   const result = await pool.query(
@@ -41,10 +41,20 @@ const updateonejson = async (payload: Iuser, id: string) => {
   );
   return result;
 };
-const deleatdata=async()
+const deleatdata = async (id: string) => {
+  const result = await pool.query(
+    `
+      DELETE FROM "user"
+      WHERE id = $1
+      `,
+    [id]
+  );
+  return result;
+};
 export const userService = {
   createuserintodb,
   alldata,
   onedataget,
   updateonejson,
+  deleatdata,
 };
