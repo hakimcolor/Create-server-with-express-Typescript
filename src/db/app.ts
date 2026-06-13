@@ -7,19 +7,38 @@ import express, {
 import config from '../config';
 // import config from './config';
 import { initDB, pool } from '../db';
-import { userRoute } from '../modules/users/user.router';
 
 const app: Application = express();
 
 app.use(express.json());
 app.use(express.text());
-app.use('/api/user', userRoute);
+
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Express server is running',
     statusCode: 200,
   });
 });
+//get all data
+app.get('/api/user', async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(`
+      SELECT * FROM "user"
+      `);
+    res.status(200).json({
+      success: true,
+      message: 'user all sucessfully here..',
+      data: result.rows,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      sucess: false,
+      message: error.message,
+      error: error,
+    });
+  }
+});
+
 app.post('/api/user', async (req: Request, res: Response) => {
   try {
     // console.log('Request Body:', req.body);
