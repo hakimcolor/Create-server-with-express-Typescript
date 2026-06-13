@@ -7,6 +7,7 @@ import express, {
 import config from '../config';
 // import config from './config';
 import { initDB, pool } from '../db';
+import { userRout } from '../modules/users/user.router';
 
 const app: Application = express();
 
@@ -20,7 +21,7 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 //get all data
-app.get('/api/user', async (req: Request, res: Response) => {
+app.use('api/user', async (req: Request, res: Response) => {
   try {
     const result = await pool.query(`
       SELECT * FROM "user"
@@ -39,33 +40,9 @@ app.get('/api/user', async (req: Request, res: Response) => {
   }
 });
 
-app.post('/api/user', async (req: Request, res: Response) => {
-  try {
-    // console.log('Request Body:', req.body);
+//post a single data from ui
+app.use('/api/user', userRout);
 
-    const { name, email, password, age } = req.body;
-
-    const result = await pool.query(
-      `
-       INSERT INTO "user" (name,email ,password,age)VALUES($1,$2,$3,$4) RETURNING *
-      `,
-      [name, email, password, age]
-    );
-    // console.log('data is ', result);
-
-    res.status(200).json({
-      message: 'Request successful',
-      data: result.rows[0],
-    });
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      message: 'Internal Server Error',
-      error: error,
-    });
-  }
-});
 //get all data for neondb
 
 // get data through using id ..
