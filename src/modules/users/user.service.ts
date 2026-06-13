@@ -12,6 +12,13 @@ const createuserintodb = async (payload: Iuser) => {
   );
   return result;
 };
+const alldata = async (payload: Iuser) => {
+  const result = await pool.query(`
+      SELECT * FROM "user"
+      `);
+  return result;
+}
 export const userService = {
   createuserintodb,
+  alldata
 };

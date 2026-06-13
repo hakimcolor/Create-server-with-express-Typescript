@@ -21,30 +21,13 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 //get all data
-app.get('api/user', async (req: Request, res: Response) => {
-  try {
-    const result = await pool.query(`
-      SELECT * FROM "user"
-      `);
-    res.status(200).json({
-      success: true,
-      message: 'user all sucessfully here..',
-      data: result.rows,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      sucess: false,
-      message: error.message,
-      error: error,
-    });
-  }
-});
+app.use('api/user',)
 
 //post a single data from ui
 app.use('/api/user', userRout);
 
 //get all data for neondb
-
+app.use('/api/user',userRout)
 // get data through using id ..
 
 app.get('/api/user/:id', async (req: Request, res: Response) => {
