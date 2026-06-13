@@ -59,8 +59,55 @@ const getOnedata = async (req: Request, res: Response) => {
     });
   }
 };
+const updatedata = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, password, age, is_active } = req.body;
+  try {
+    const result = await userService.updateonejson(req.body, id as string);
+    if (result.rows.length === 0) {
+      res.status(500).json({ success: false });
+    }
+    res.status(200).json({
+      success: true,
+      message: 'user retived sucessfully id ..',
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+};
+const deleatedatadb = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'User deleted successfully',
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      error,
+    });
+  }
+};
 export const userController = {
   createuser,
   getallData,
   getOnedata,
+  updatedata,
+  deleatedatadb,
 };

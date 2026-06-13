@@ -33,71 +33,10 @@ app.use('/api/user/',userRout)
 
 
 //put method for updategit
-app.put('/api/user/:id', async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { name, password, age, is_active } = req.body;
-  try {
-    const result = await pool.query(
-      //if not update thias why using coalesce ($1, name)
-      `
-  UPDATE "user"
-  SET
-    name = COALESCE($1, name), 
-    password = COALESCE($2, password),
-    age = COALESCE($3, age),
-    is_active = COALESCE($4, is_active)
-  WHERE id = $5
-  RETURNING *;
-  `,
-      [name, password, age, is_active, id]
-    );
-    if (result.rows.length === 0) {
-      res.status(500).json({ success: false });
-    }
-    res.status(200).json({
-      success: true,
-      message: 'user retived sucessfully id ..',
-      data: result.rows[0],
-    });
-  } catch (error: any) {
-    res.status(404).json({
-      success: false,
-      message: error.message,
-      error: error,
-    });
-  }
-});
+app.use('/api/user/',userRout,)
+
 //deleate using deleate
-app.delete('/api/user/:id', async (req: Request, res: Response) => {
-  const { id } = req.params;
+app.use('api/user/',userRout)
 
-  try {
-    const result = await pool.query(
-      `
-      DELETE FROM "user"
-      WHERE id = $1
-      `,
-      [id]
-    );
-
-    if (result.rowCount === 0) {
-      return res.status(404).json({
-        success: false,
-        message: 'User not found',
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: 'User deleted successfully',
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-      error,
-    });
-  }
-});
 
 export default app;
