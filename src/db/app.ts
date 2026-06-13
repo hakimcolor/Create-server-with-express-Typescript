@@ -21,7 +21,7 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 //get all data
-app.use('api/user', async (req: Request, res: Response) => {
+app.get('api/user', async (req: Request, res: Response) => {
   try {
     const result = await pool.query(`
       SELECT * FROM "user"
