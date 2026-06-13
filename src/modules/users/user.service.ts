@@ -18,7 +18,12 @@ const alldata = async () => {
       `);
   return result;
 };
+const onedataget = async (id: string) => {
+  const resulet = await pool.query(`SELECT * FROM "user" WHERE id=$1`, [id]);
+  return resulet;
+};
 export const userService = {
   createuserintodb,
   alldata,
+  onedataget,
 };

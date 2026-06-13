@@ -5,5 +5,6 @@ import { userController } from './user.controller';
 const router = Router();
 router.post('/', userController.createuser);
 //get all data
-router.get('/',userController.getallData );
+router.get('/', userController.getallData);
+router.get('/:id',userController.getOnedata );
 export const userRout = router;

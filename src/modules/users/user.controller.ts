@@ -39,7 +39,28 @@ const getallData = async (req: Request, res: Response) => {
     });
   }
 };
+const getOnedata = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const resulet = await userService.onedataget(id as string);
+    if (resulet.rows.length === 0) {
+      res.status(500).json({ success: false });
+    }
+    res.status(200).json({
+      success: true,
+      message: 'user retived sucessfully id ..',
+      data: resulet.rows[0],
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+};
 export const userController = {
   createuser,
   getallData,
+  getOnedata,
 };
