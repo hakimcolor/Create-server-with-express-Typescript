@@ -21,7 +21,7 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 //get all data
-app.use('api/user',)
+app.use('api/user',userRout)
 
 //post a single data from ui
 app.use('/api/user', userRout);

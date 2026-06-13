@@ -25,7 +25,7 @@ const createuser = async (req: Request, res: Response) => {
 };
 const getallData = async (req: Request, res: Response) => {
   try {
-    const result = await userService.alldata;
+    const result = await userService.alldata();
     res.status(200).json({
       success: true,
       message: 'user all sucessfully here..',
