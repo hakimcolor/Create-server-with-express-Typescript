@@ -1,20 +1,22 @@
 import { pool } from '../../db';
 import type { Iuser } from './user.typs';
-import bcrypt from "bcryptjs";
+import bcrypt from 'bcryptjs';
 const createuserintodb = async (payload: Iuser) => {
   const { name, email, password, age } = payload;
-const hashpassword=await bcrypt.hash(password,10)
+  const hashpassword = await bcrypt.hash(password, 10);
   const result = await pool.query(
     `
        INSERT INTO "user" (name,email ,password,age)VALUES($1,$2,$3,$4) RETURNING *
       `,
     [name, email, hashpassword, age]
   );
+
+  delete result.rows[0].password;
   return result;
 };
 const alldata = async () => {
   const result = await pool.query(`
-      SELECT * FROM "user"
+      SELECT id, name, email, age, is_active FROM "user"
       `);
   return result;
 };
@@ -25,6 +27,7 @@ const onedataget = async (id: string) => {
 //update data
 const updateonejson = async (payload: Iuser, id: string) => {
   const { name, password, age, is_active } = payload;
+  const hashpassword = await bcrypt.hash(password, 10);
   const result = await pool.query(
     //if not update thias why using coalesce ($1, name)
     `
@@ -37,8 +40,10 @@ const updateonejson = async (payload: Iuser, id: string) => {
   WHERE id = $5
   RETURNING *;
   `,
-    [name, password, age, is_active, id]
+    [name, hashpassword, age, is_active, id]
   );
+  delete result.rows[0].password;
+
   return result;
 };
 const deleatdata = async (id: string) => {
