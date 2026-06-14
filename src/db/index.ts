@@ -26,7 +26,7 @@ export const initDB = async () => {
   bio TEXT,
   address TEXT,
   phone VARCHAR(15),
-  gender varchar(15),created_at TIMESTAMP DEFAULT NOW(),
+  gender VARCHAR(15),created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
 
 

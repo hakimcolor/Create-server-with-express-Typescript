@@ -1,20 +1,22 @@
 import { error } from 'node:console';
 import type { Request, Response } from 'express';
 import { Result } from 'pg';
+import { profileservice } from './profile.service';
 
 const createdata = async (req: Request, res: Response) => {
   try {
-    const resulet = req.body;
-    console.log(resulet);
+    const resulet = await profileservice.createprofileintodb(req.body);
+    // console.log(resulet);
     res.status(201).json({
       success: true,
       message: 'success your profile createad',
       data: resulet,
     });
   } catch (error: any) {
-    res.status(201).json({
+    res.status(500).json({
       success: false,
       message: 'success your profile createad',
+      error: error,
     });
   }
 };
