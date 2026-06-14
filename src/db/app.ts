@@ -36,7 +36,10 @@ app.use('/api/user/',userRout)
 app.use('/api/user/',userRout,)
 
 //deleate using deleate
-app.use('api/user/',userRout)
+app.use('api/user/', userRout)
+
+// create profile 
+app.use('/api/profile',)
 
 
 export default app;
