@@ -8,6 +8,7 @@ import config from '../config';
 // import config from './config';
 import { initDB, pool } from '../db';
 import { userRout } from '../modules/users/user.router';
+import { userProfile } from '../modules/profile/profile.router';
 
 const app: Application = express();
 
@@ -21,25 +22,23 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 //get all data
-app.use('api/user',userRout)
+app.use('api/user', userRout);
 
 //post a single data from ui
 app.use('/api/user', userRout);
 
 //get all data for neondb
-app.use('/api/user',userRout)
+app.use('/api/user', userRout);
 // get data through using id ..
-app.use('/api/user/',userRout)
-
+app.use('/api/user/', userRout);
 
 //put method for updategit
-app.use('/api/user/',userRout,)
+app.use('/api/user/', userRout);
 
 //deleate using deleate
-app.use('api/user/', userRout)
+app.use('api/user/', userRout);
 
-// create profile 
-app.use('/api/profile',)
-
+// create profile
+app.use('/api/profile', userProfile.router);
 
 export default app;
