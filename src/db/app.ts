@@ -9,6 +9,7 @@ import config from '../config';
 import { initDB, pool } from '../db';
 import { userRout } from '../modules/users/user.router';
 import { userProfile } from '../modules/profile/profile.router';
+import { authrouter } from '../modules/auth/auth.router';
 
 const app: Application = express();
 
@@ -40,5 +41,7 @@ app.use('api/user/', userRout);
 
 // create profile
 app.use('/api/profile', userProfile.router);
+app.use('/api/auth',authrouter.router)
+
 
 export default app;
