@@ -19,6 +19,20 @@ export const initDB = async () => {
       )
     `);
 
+    await pool.query(`
+  CREATE TABLE IF NOT EXISTS "profile"(
+  id SERIAL PRIMARY KEY,
+  user_id INT UNIQUE REFERENCES "user"(id) ON DELETE CASCADE,
+  bio TEXT,
+  address TEXT,
+  phone VARCHAR(15),
+  gender varchar(15),created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+
+
+  )
+      `);
+
     console.log('Database initialized successfully');
   } catch (error) {
     console.error('Database initialization error:', error);
