@@ -1,6 +1,6 @@
-import { error } from 'node:console';
+
 import type { Request, Response } from 'express';
-import { Result } from 'pg';
+
 import { profileservice } from './profile.service';
 
 const createdata = async (req: Request, res: Response) => {
