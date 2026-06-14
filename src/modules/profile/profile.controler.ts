@@ -10,13 +10,13 @@ const createdata = async (req: Request, res: Response) => {
     res.status(201).json({
       success: true,
       message: 'success your profile createad',
-      data: resulet.rows[0],
+      data: resulet.rows,
     });
   } catch (error: any) {
     res.status(500).json({
       success: false,
       message: 'success not  your profile createad',
-      error: error,
+      error: error.message,
     });
   }
 };
