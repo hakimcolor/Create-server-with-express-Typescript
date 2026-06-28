@@ -15,7 +15,7 @@ const loginguserintodb = async (ppayload: {
     [email]
   );
   if (userdata.rows.length === 0) {
-    throw new Error('i...');
+    throw new Error('Invalid ...');
   }
   const user = userdata.rows[0];
   const matchpassword = await bcrypt.compare(password, user.password);
