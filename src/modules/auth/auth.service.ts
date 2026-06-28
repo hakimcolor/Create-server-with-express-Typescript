@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import { pool } from '../../db';
-
+import jwt from 'jsonwebtoken';
+import { stringify } from 'node:querystring';
+import config from '../../config';
 const loginguserintodb = async (ppayload: {
   email: string;
   password: string;
@@ -20,6 +22,17 @@ const loginguserintodb = async (ppayload: {
   if (!matchpassword) {
     throw new Error('not ......');
   }
+  const jwtplayload = {
+    id: user.id,
+    name: user.name,
+    is_active: user.is_acitve,
+    email: user.email,
+  };
+  const accesstoken = jwt.sign(jwtplayload, config.secret as string, {
+    expiresIn: '1d',
+  });
+
+  return accesstoken;
 };
 export const logingserintdb = {
   loginguserintodb,
