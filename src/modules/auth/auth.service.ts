@@ -35,5 +35,5 @@ const loginguserintodb = async (ppayload: {
   return accesstoken;
 };
 export const logingserintdb = {
-  loginguserintodb,
+  loginguserintodb
 };
