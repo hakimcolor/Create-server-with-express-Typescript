@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { stringify } from 'node:querystring';
 import config from '../../config';
 const loginguserintodb = async (ppayload: {
-  email: any;
+  email: string;
   password: string;
 }) => {
   const { email, password } = ppayload;
