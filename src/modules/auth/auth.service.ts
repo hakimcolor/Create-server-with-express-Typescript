@@ -5,7 +5,7 @@ import { stringify } from 'node:querystring';
 import config from '../../config';
 const loginguserintodb = async (ppayload: {
   email: string;
-  password: string;
+  password: number
 }) => {
   const { email, password } = ppayload;
   const userdata = await pool.query(
